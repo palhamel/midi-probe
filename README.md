@@ -1,73 +1,103 @@
-# React + TypeScript + Vite
+# MIDI Probe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-22-339933)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
+[![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
 
-Currently, two official plugins are available:
+Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs with human-readable message parsing, test outputs with a virtual keyboard and CC sliders -- all from a single browser tab.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### Input Monitoring
+- Auto-detect all connected MIDI input and output ports
+- Live device connect/disconnect detection
+- Real-time message parsing: Note On/Off, CC, Program Change, Pitch Bend, Aftertouch, SysEx
+- Human-readable labels (Note On C4, CC#7 Volume, Pitch Bend +4096)
+- Color-coded message types for visual scanning
+- Per-port activity indicators
+- Scrolling message log with timestamps
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Output Testing
+- Virtual 2-octave piano keyboard with octave shift
+- 6 configurable CC sliders (Mod Wheel, Volume, Pan, Expression, Cutoff, Resonance)
+- Spring-loaded pitch bend wheel (returns to center on release)
+- Program change sender
+- Configurable MIDI channel (1-16) and velocity
 
-## Expanding the ESLint configuration
+### Filtering and Export
+- Filter by message type (Note On, CC, Program Change, etc.)
+- Filter by MIDI channel (1-16)
+- Export message log as CSV or JSON
+- Pause/resume log capture
+- Keyboard shortcuts: Space = pause, C = clear
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Quick Start
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/palhamel/midi-probe.git
+cd midi-probe
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173/midi-probe/ in Chrome, Edge, or Opera.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Browser Support
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+MIDI Probe uses the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API), which is available in Chromium-based browsers only:
+
+- Chrome 43+
+- Edge 79+
+- Opera 30+
+
+Firefox and Safari do not support the Web MIDI API.
+
+## Tech Stack
+
+- React 19 + TypeScript 5.9
+- Vite 7
+- Tailwind CSS v4
+- Vitest (47 tests)
+- ESLint with React Hooks plugin
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Type check + production build |
+| `npm test` | Run all tests |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run lint` | Run ESLint |
+| `npm run typecheck` | TypeScript type check |
+
+## Project Structure
+
 ```
+src/
+  App.tsx                  # Main app layout
+  hooks/
+    useMIDI.ts             # Core MIDI hook (Web MIDI API wrapper)
+  components/
+    Header.tsx             # Status bar with connection indicator
+    DevicePanel.tsx        # Input/output device list with activity dots
+    MessageLog.tsx         # Scrolling parsed message log
+    FilterPanel.tsx        # Message type and channel filters
+    OutputPanel.tsx        # Output testing panel (orchestrator)
+    Keyboard.tsx           # Virtual piano keyboard
+    CCSliders.tsx          # Control Change sliders
+    PitchBend.tsx          # Pitch bend wheel
+    ProgramChange.tsx      # Program change sender
+    ErrorBanner.tsx        # Error display
+  utils/
+    midiParser.ts          # MIDI byte parsing and labeling
+    export.ts              # CSV/JSON export
+  types/
+    midi.ts                # TypeScript types and defaults
+```
+
+## License
+
+MIT
