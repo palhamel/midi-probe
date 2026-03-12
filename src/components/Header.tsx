@@ -1,4 +1,4 @@
-import { LuActivity, LuWifi, LuWifiOff } from 'react-icons/lu';
+import { LuActivity, LuPlug, LuPlugZap } from 'react-icons/lu';
 
 interface HeaderProps {
   isConnected: boolean;
@@ -22,19 +22,26 @@ const Header = ({ isConnected, isSupported, messageRate, onReconnect }: HeaderPr
       )}
       <button
         onClick={onReconnect}
+        title={isConnected
+          ? 'Browser has MIDI access. Click to re-scan devices.'
+          : isSupported
+            ? 'MIDI access not granted. Click to request permission.'
+            : 'Your browser does not support the Web MIDI API. Use Chrome, Edge, or Opera.'}
         className="flex items-center gap-1.5 text-xs cursor-pointer
                    px-2 py-1 rounded border border-border
                    hover:bg-bg-hover transition-colors"
       >
         {isConnected ? (
           <>
-            <LuWifi className="w-3.5 h-3.5 text-accent-green" />
-            <span className="text-accent-green">Connected</span>
+            <LuPlugZap className="w-3.5 h-3.5 text-accent-green" />
+            <span className="text-accent-green">MIDI Active</span>
           </>
         ) : (
           <>
-            <LuWifiOff className="w-3.5 h-3.5 text-accent-red" />
-            <span className="text-accent-red">{isSupported ? 'Disconnected' : 'Not Supported'}</span>
+            <LuPlug className="w-3.5 h-3.5 text-accent-red" />
+            <span className="text-accent-red">
+              {isSupported ? 'MIDI Not Allowed' : 'MIDI Not Supported'}
+            </span>
           </>
         )}
       </button>
