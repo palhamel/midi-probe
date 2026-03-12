@@ -156,6 +156,7 @@ const App = () => {
             selectedOutput={selectedOutput}
             onToggleInput={toggleInput}
             onSelectOutput={setSelectedOutput}
+            onScanDevices={requestAccess}
           />
         </div>
 
