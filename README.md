@@ -10,20 +10,26 @@ Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs
 
 ## Features
 
+### Device Management
+- Ports grouped by MIDI interface/manufacturer
+- Scan button to re-detect devices
+- MIDI access status indicator in header
+- Per-port activity indicators with IN/OUT labels
+
 ### Input Monitoring
 - Auto-detect all connected MIDI input and output ports
 - Live device connect/disconnect detection
 - Real-time message parsing: Note On/Off, CC, Program Change, Pitch Bend, Aftertouch, SysEx
 - Human-readable labels (Note On C4, CC#7 Volume, Pitch Bend +4096)
 - Color-coded message types for visual scanning
-- Per-port activity indicators
 - Scrolling message log with timestamps
 
 ### Output Testing
-- Virtual 2-octave piano keyboard with octave shift
-- 6 configurable CC sliders (Mod Wheel, Volume, Pan, Expression, Cutoff, Resonance)
-- Spring-loaded pitch bend wheel (returns to center on release)
-- Program change sender
+- Virtual 2-octave piano keyboard with octave shift and note hover tooltip
+- 6 CC sliders with click-to-reset labels (Mod Wheel, Volume, Pan, Expression, Cutoff, Resonance)
+- Horizontal spring-loaded pitch bend (returns to center on release)
+- Program change sender with manual value input
+- Outgoing messages logged in the message log
 - Configurable MIDI channel (1-16) and velocity
 
 ### Filtering and Export
@@ -81,14 +87,14 @@ src/
   hooks/
     useMIDI.ts             # Core MIDI hook (Web MIDI API wrapper)
   components/
-    Header.tsx             # Status bar with connection indicator
-    DevicePanel.tsx        # Input/output device list with activity dots
+    Header.tsx             # Status bar with MIDI access indicator
+    DevicePanel.tsx        # Device list grouped by interface with scan button
     MessageLog.tsx         # Scrolling parsed message log
     FilterPanel.tsx        # Message type and channel filters
     OutputPanel.tsx        # Output testing panel (orchestrator)
-    Keyboard.tsx           # Virtual piano keyboard
-    CCSliders.tsx          # Control Change sliders
-    PitchBend.tsx          # Pitch bend wheel
+    Keyboard.tsx           # Virtual piano keyboard with note hover tooltip
+    CCSliders.tsx          # Control Change sliders with click-to-reset
+    PitchBend.tsx          # Horizontal pitch bend slider
     ProgramChange.tsx      # Program change sender
     ErrorBanner.tsx        # Error display
   utils/

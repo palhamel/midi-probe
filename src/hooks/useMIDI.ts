@@ -159,6 +159,20 @@ export const useMIDI = (): UseMIDIReturn => {
     const output = midiAccessRef.current.outputs.get(outputId);
     if (output) {
       output.send(data);
+
+      if (!pausedRef.current) {
+        const parsed = parseMIDIMessage(
+          new Uint8Array(data),
+          outputId,
+          output.name || 'Unknown',
+          performance.now(),
+        );
+        setMessages((prev) => {
+          const next = [parsed, ...prev];
+          if (next.length > MAX_MESSAGES) next.length = MAX_MESSAGES;
+          return next;
+        });
+      }
     }
   }, []);
 

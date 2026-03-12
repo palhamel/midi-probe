@@ -9,10 +9,10 @@ const PitchBend = ({ onPitchBend }: PitchBendProps) => {
   const isDragging = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const updateValue = useCallback((clientY: number) => {
+  const updateValue = useCallback((clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const ratio = 1 - (clientY - rect.top) / rect.height;
+    const ratio = (clientX - rect.left) / rect.width;
     const clamped = Math.max(0, Math.min(1, ratio));
     const bendValue = Math.round(clamped * 16383);
     setValue(bendValue);
@@ -22,12 +22,12 @@ const PitchBend = ({ onPitchBend }: PitchBendProps) => {
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     isDragging.current = true;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
-    updateValue(e.clientY);
+    updateValue(e.clientX);
   }, [updateValue]);
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging.current) return;
-    updateValue(e.clientY);
+    updateValue(e.clientX);
   }, [updateValue]);
 
   const handlePointerUp = useCallback(() => {
@@ -40,34 +40,25 @@ const PitchBend = ({ onPitchBend }: PitchBendProps) => {
   const displayValue = value - 8192;
 
   return (
-    <div className="flex flex-col gap-2">
-      <h3 className="text-xs font-semibold text-text-muted uppercase tracking-wider">
-        Pitch Bend
-      </h3>
-      <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2 h-7">
+      <span className="text-[10px] text-text-secondary w-16 shrink-0">Pitch Bend</span>
+      <div
+        ref={containerRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        className="relative flex-1 h-5 bg-bg-tertiary rounded border border-border
+                   cursor-pointer select-none touch-none min-w-0"
+      >
+        <div className="absolute top-0 bottom-0 left-1/2 w-px bg-border" />
         <div
-          ref={containerRef}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          className="relative w-8 h-32 bg-bg-tertiary rounded border border-border
-                     cursor-pointer select-none touch-none"
-        >
-          <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
-          <div
-            className="absolute left-1 right-1 h-3 bg-accent-cyan rounded-sm transition-none"
-            style={{ top: `calc(${100 - percentage}% - 6px)` }}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <span className="text-xs font-mono text-text-secondary">
-            {displayValue > 0 ? `+${displayValue}` : displayValue}
-          </span>
-          <span className="text-[10px] text-text-muted">
-            {displayValue === 0 ? 'Center' : displayValue > 0 ? 'Up' : 'Down'}
-          </span>
-        </div>
+          className="absolute top-0.5 bottom-0.5 w-2.5 bg-accent-cyan rounded-sm transition-none"
+          style={{ left: `calc(${percentage}% - 5px)` }}
+        />
       </div>
+      <span className="text-[10px] font-mono text-text-muted w-6 text-right shrink-0">
+        {displayValue > 0 ? `+${displayValue}` : displayValue}
+      </span>
     </div>
   );
 };

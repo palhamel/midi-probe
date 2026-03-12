@@ -17,8 +17,17 @@ const BLACK_OFFSETS: Record<number, string> = {
   10: 'left-[calc(100%/14*11-6px)]',
 };
 
+const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+const noteName = (midi: number): string => {
+  const name = NOTE_NAMES[midi % 12];
+  const oct = Math.floor(midi / 12) - 1;
+  return `${name}${oct}`;
+};
+
 const Keyboard = ({ onNoteOn, onNoteOff, octave, onOctaveChange }: KeyboardProps) => {
   const [activeNotes, setActiveNotes] = useState<Set<number>>(new Set());
+  const [hoveredNote, setHoveredNote] = useState<number | null>(null);
 
   const baseNote = (octave + 1) * 12;
 
@@ -49,12 +58,16 @@ const Keyboard = ({ onNoteOn, onNoteOff, octave, onOctaveChange }: KeyboardProps
                 key={note}
                 onPointerDown={() => handleNoteOn(note)}
                 onPointerUp={() => handleNoteOff(note)}
-                onPointerLeave={() => { if (activeNotes.has(note)) handleNoteOff(note); }}
+                onPointerLeave={() => {
+                  if (activeNotes.has(note)) handleNoteOff(note);
+                  setHoveredNote(null);
+                }}
+                onPointerEnter={() => setHoveredNote(note)}
                 className={`flex-1 border-r border-border/50 cursor-pointer transition-colors
                   rounded-b select-none touch-none
                   ${isActive
                     ? 'bg-accent-blue/30 border-accent-blue/50'
-                    : 'bg-bg-tertiary hover:bg-bg-hover'
+                    : 'bg-[#3a4050] hover:bg-[#434960]'
                   }`}
               />
             );
@@ -69,7 +82,11 @@ const Keyboard = ({ onNoteOn, onNoteOff, octave, onOctaveChange }: KeyboardProps
                 key={note}
                 onPointerDown={() => handleNoteOn(note)}
                 onPointerUp={() => handleNoteOff(note)}
-                onPointerLeave={() => { if (activeNotes.has(note)) handleNoteOff(note); }}
+                onPointerLeave={() => {
+                  if (activeNotes.has(note)) handleNoteOff(note);
+                  setHoveredNote(null);
+                }}
+                onPointerEnter={() => setHoveredNote(note)}
                 className={`absolute w-[12px] h-full cursor-pointer pointer-events-auto
                   rounded-b select-none touch-none z-10
                   ${BLACK_OFFSETS[semitone] || ''}
@@ -111,9 +128,18 @@ const Keyboard = ({ onNoteOn, onNoteOff, octave, onOctaveChange }: KeyboardProps
           </button>
         </div>
       </div>
-      <div className="flex h-24 rounded overflow-hidden border border-border">
-        {renderOctaveKeys(0)}
-        {renderOctaveKeys(1)}
+      <div className="relative">
+        {hoveredNote !== null && (
+          <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20
+                          px-2 py-0.5 rounded bg-bg-tertiary border border-border
+                          text-[10px] font-mono text-text-secondary whitespace-nowrap">
+            {noteName(hoveredNote)} <span className="text-text-muted">({hoveredNote})</span>
+          </div>
+        )}
+        <div className="flex h-24 rounded overflow-hidden border border-border">
+          {renderOctaveKeys(0)}
+          {renderOctaveKeys(1)}
+        </div>
       </div>
     </div>
   );

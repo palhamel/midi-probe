@@ -31,41 +31,44 @@ const CCSliders = ({ onCCChange }: CCSlidersProps) => {
     onCCChange(sliders[index].cc, value);
   }, [onCCChange, sliders]);
 
+  const handleReset = useCallback((index: number) => {
+    const defaultValue = DEFAULT_SLIDERS[index].value;
+    setSliders((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], value: defaultValue };
+      return next;
+    });
+    onCCChange(sliders[index].cc, defaultValue);
+  }, [onCCChange, sliders]);
+
   return (
-    <div className="flex flex-col gap-2">
-      <h3 className="text-xs font-semibold text-text-muted uppercase tracking-wider">
+    <div className="flex flex-col gap-1">
+      <h3 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-1">
         CC Sliders
       </h3>
-      <div className="grid grid-cols-2 gap-2">
-        {sliders.map((slider, index) => (
-          <div key={slider.cc} className="flex flex-col gap-1 p-2 bg-bg-tertiary rounded">
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] text-text-secondary truncate">{slider.label}</span>
-              <span className="text-[10px] font-mono text-text-muted">CC{slider.cc}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="range"
-                min={0}
-                max={127}
-                value={slider.value}
-                onChange={(e) => handleChange(index, parseInt(e.target.value))}
-                className="flex-1 h-1 accent-accent-blue cursor-pointer"
-              />
-              <input
-                type="number"
-                min={0}
-                max={127}
-                value={slider.value}
-                onChange={(e) => handleChange(index, Math.min(127, Math.max(0, parseInt(e.target.value) || 0)))}
-                className="w-10 text-[10px] font-mono text-center bg-bg-primary
-                           border border-border rounded px-1 py-0.5 text-text-secondary
-                           focus:outline-none focus:border-accent-blue"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+      {sliders.map((slider, index) => (
+        <div key={slider.cc} className="flex items-center gap-2 h-7">
+          <button
+            onClick={() => handleReset(index)}
+            title={`Reset to ${DEFAULT_SLIDERS[index].value}`}
+            className="text-[10px] text-text-secondary w-16 shrink-0 truncate text-left
+                       cursor-pointer hover:text-accent-blue transition-colors"
+          >
+            {slider.label}
+          </button>
+          <input
+            type="range"
+            min={0}
+            max={127}
+            value={slider.value}
+            onChange={(e) => handleChange(index, parseInt(e.target.value))}
+            className="flex-1 h-1 accent-accent-blue cursor-pointer min-w-0"
+          />
+          <span className="text-[10px] font-mono text-text-muted w-6 text-right shrink-0">
+            {slider.value}
+          </span>
+        </div>
+      ))}
     </div>
   );
 };

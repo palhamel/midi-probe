@@ -4,10 +4,9 @@ interface HeaderProps {
   isConnected: boolean;
   isSupported: boolean;
   messageRate: number;
-  onReconnect: () => void;
 }
 
-const Header = ({ isConnected, isSupported, messageRate, onReconnect }: HeaderProps) => (
+const Header = ({ isConnected, isSupported, messageRate }: HeaderProps) => (
   <header className="flex items-center justify-between px-4 py-3 bg-bg-secondary border-b border-border">
     <div className="flex items-center gap-3">
       <h1 className="text-lg font-semibold tracking-tight">MIDI Probe</h1>
@@ -20,31 +19,28 @@ const Header = ({ isConnected, isSupported, messageRate, onReconnect }: HeaderPr
           {messageRate} msg/s
         </div>
       )}
-      <button
-        onClick={onReconnect}
+      <div
         title={isConnected
-          ? 'Browser has MIDI access. Click to re-scan devices.'
+          ? 'Browser has MIDI access granted.'
           : isSupported
-            ? 'MIDI access not granted. Click to request permission.'
+            ? 'MIDI access not granted. Use Scan Devices to request permission.'
             : 'Your browser does not support the Web MIDI API. Use Chrome, Edge, or Opera.'}
-        className="flex items-center gap-1.5 text-xs cursor-pointer
-                   px-2 py-1 rounded border border-border
-                   hover:bg-bg-hover transition-colors"
+        className="flex items-center gap-1.5 text-xs px-2 py-1 rounded border border-border"
       >
         {isConnected ? (
           <>
             <LuPlugZap className="w-3.5 h-3.5 text-accent-green" />
-            <span className="text-accent-green">MIDI Active</span>
+            <span className="text-accent-green">MIDI Access</span>
           </>
         ) : (
           <>
             <LuPlug className="w-3.5 h-3.5 text-accent-red" />
             <span className="text-accent-red">
-              {isSupported ? 'MIDI Not Allowed' : 'MIDI Not Supported'}
+              {isSupported ? 'No MIDI Access' : 'Not Supported'}
             </span>
           </>
         )}
-      </button>
+      </div>
     </div>
   </header>
 );

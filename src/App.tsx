@@ -84,7 +84,6 @@ const App = () => {
         isConnected={isConnected}
         isSupported={isSupported}
         messageRate={messageRate}
-        onReconnect={requestAccess}
       />
 
       {error && <ErrorBanner message={error} />}
@@ -126,6 +125,7 @@ const App = () => {
               selectedOutput={selectedOutput}
               onToggleInput={toggleInput}
               onSelectOutput={setSelectedOutput}
+              onScanDevices={requestAccess}
             />
           </div>
         )}

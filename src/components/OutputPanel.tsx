@@ -93,15 +93,9 @@ const OutputPanel = ({ selectedOutput, outputName, sendMessage }: OutputPanelPro
         onNoteOff={handleNoteOff}
       />
 
-      <div className="flex gap-4">
-        <div className="flex-1">
-          <CCSliders onCCChange={handleCCChange} />
-        </div>
-        <div className="flex flex-col gap-4">
-          <PitchBend onPitchBend={handlePitchBend} />
-          <ProgramChange onProgramChange={handleProgramChange} />
-        </div>
-      </div>
+      <CCSliders onCCChange={handleCCChange} />
+      <PitchBend onPitchBend={handlePitchBend} />
+      <ProgramChange onProgramChange={handleProgramChange} />
     </div>
   );
 };
