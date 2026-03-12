@@ -8,6 +8,7 @@ import OutputPanel from './components/OutputPanel.tsx';
 import ErrorBanner from './components/ErrorBanner.tsx';
 
 type RightPanel = 'output' | 'filter';
+type MobileTab = 'monitor' | 'devices' | 'output' | 'filter';
 
 const App = () => {
   const {
@@ -31,6 +32,7 @@ const App = () => {
 
   const [selectedOutput, setSelectedOutput] = useState<string | null>(null);
   const [rightPanel, setRightPanel] = useState<RightPanel>('output');
+  const [mobileTab, setMobileTab] = useState<MobileTab>('monitor');
 
   // Auto-select first output when outputs change
   const firstOutputId = outputs.length > 0 ? outputs[0].id : null;
@@ -69,6 +71,13 @@ const App = () => {
 
   const selectedOutputName = outputs.find(o => o.id === selectedOutput)?.name || '';
 
+  const mobileTabClasses = (tab: MobileTab) =>
+    `flex-1 py-2.5 text-xs font-medium cursor-pointer transition-colors text-center
+     ${mobileTab === tab
+       ? 'text-accent-blue border-b-2 border-accent-blue bg-bg-tertiary/50'
+       : 'text-text-muted hover:text-text-secondary'
+     }`;
+
   return (
     <div className="flex flex-col h-screen">
       <Header
@@ -80,7 +89,64 @@ const App = () => {
 
       {error && <ErrorBanner message={error} />}
 
-      <div className="flex flex-1 overflow-hidden">
+      {/* Mobile/Tablet tab bar - visible below lg */}
+      <div className="flex border-b border-border bg-bg-secondary lg:hidden">
+        <button onClick={() => setMobileTab('monitor')} className={mobileTabClasses('monitor')}>
+          Monitor
+        </button>
+        <button onClick={() => setMobileTab('devices')} className={mobileTabClasses('devices')}>
+          Devices
+        </button>
+        <button onClick={() => setMobileTab('output')} className={mobileTabClasses('output')}>
+          Output
+        </button>
+        <button onClick={() => setMobileTab('filter')} className={mobileTabClasses('filter')}>
+          Filters
+        </button>
+      </div>
+
+      {/* Mobile/Tablet content - visible below lg */}
+      <div className="flex-1 overflow-hidden lg:hidden">
+        {mobileTab === 'monitor' && (
+          <div className="flex flex-col h-full">
+            <MessageLog
+              messages={messages}
+              paused={paused}
+              onClear={clearMessages}
+              onTogglePause={() => setPaused(!paused)}
+            />
+          </div>
+        )}
+        {mobileTab === 'devices' && (
+          <div className="h-full overflow-y-auto bg-bg-secondary">
+            <DevicePanel
+              inputs={inputs}
+              outputs={outputs}
+              monitoredInputs={monitoredInputs}
+              selectedOutput={selectedOutput}
+              onToggleInput={toggleInput}
+              onSelectOutput={setSelectedOutput}
+            />
+          </div>
+        )}
+        {mobileTab === 'output' && (
+          <div className="h-full overflow-y-auto bg-bg-secondary">
+            <OutputPanel
+              selectedOutput={selectedOutput}
+              outputName={selectedOutputName}
+              sendMessage={sendMessage}
+            />
+          </div>
+        )}
+        {mobileTab === 'filter' && (
+          <div className="h-full overflow-y-auto bg-bg-secondary">
+            <FilterPanel filter={filter} onFilterChange={setFilter} />
+          </div>
+        )}
+      </div>
+
+      {/* Desktop 3-column layout - visible at lg and above */}
+      <div className="hidden lg:flex flex-1 overflow-hidden">
         {/* Left sidebar - Devices */}
         <div className="w-52 shrink-0 border-r border-border bg-bg-secondary overflow-y-auto">
           <DevicePanel

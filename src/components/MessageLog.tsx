@@ -22,19 +22,20 @@ const formatTime = (timestamp: number): string => {
 
 const MessageRow = ({ msg }: { msg: ParsedMIDIMessage }) => (
   <div
-    className={`flex items-center gap-3 px-3 py-1 text-xs font-mono
-      border-b border-border/30 hover:bg-bg-hover/50 ${getTypeBgColor(msg.type)}`}
+    className={`flex items-center gap-2 px-3 py-1 text-xs font-mono
+      border-b border-border/30 hover:bg-bg-hover/50 min-w-[500px]
+      sm:gap-3 ${getTypeBgColor(msg.type)}`}
   >
-    <span className="text-text-muted w-20 shrink-0">{formatTime(msg.timestamp)}</span>
-    <span className="text-text-secondary w-24 shrink-0 truncate">{msg.portName}</span>
-    <span className="text-text-muted w-8 shrink-0 text-center">
+    <span className="text-text-muted w-16 shrink-0 sm:w-20">{formatTime(msg.timestamp)}</span>
+    <span className="text-text-secondary w-20 shrink-0 truncate hidden sm:block">{msg.portName}</span>
+    <span className="text-text-muted w-6 shrink-0 text-center sm:w-8">
       {msg.channel ?? '-'}
     </span>
-    <span className={`w-32 shrink-0 font-medium ${getTypeColor(msg.type)}`}>
+    <span className={`w-28 shrink-0 font-medium sm:w-32 ${getTypeColor(msg.type)}`}>
       {msg.label}
     </span>
     <span className="text-text-secondary truncate">{msg.detail}</span>
-    <span className="text-text-muted ml-auto shrink-0">
+    <span className="text-text-muted ml-auto shrink-0 hidden md:block">
       {Array.from(msg.data).map(b => b.toString(16).padStart(2, '0').toUpperCase()).join(' ')}
     </span>
   </div>
@@ -112,17 +113,18 @@ const MessageLog = ({ messages, paused, onClear, onTogglePause }: MessageLogProp
         </div>
       </div>
 
-      <div className="flex items-center gap-3 px-3 py-1 text-[10px] font-mono text-text-muted
-                       uppercase tracking-wider border-b border-border bg-bg-tertiary">
-        <span className="w-20 shrink-0">Time</span>
-        <span className="w-24 shrink-0">Port</span>
-        <span className="w-8 shrink-0 text-center">Ch</span>
-        <span className="w-32 shrink-0">Message</span>
+      <div className="flex items-center gap-2 px-3 py-1 text-[10px] font-mono text-text-muted
+                       uppercase tracking-wider border-b border-border bg-bg-tertiary
+                       min-w-[500px] sm:gap-3">
+        <span className="w-16 shrink-0 sm:w-20">Time</span>
+        <span className="w-20 shrink-0 hidden sm:block">Port</span>
+        <span className="w-6 shrink-0 text-center sm:w-8">Ch</span>
+        <span className="w-28 shrink-0 sm:w-32">Message</span>
         <span className="truncate">Detail</span>
-        <span className="ml-auto shrink-0">Raw</span>
+        <span className="ml-auto shrink-0 hidden md:block">Raw</span>
       </div>
 
-      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-auto">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-text-muted text-sm">
             Waiting for MIDI messages...
