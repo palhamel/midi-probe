@@ -6,6 +6,8 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
 [![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
 
+**Live:** [palhamel.github.io/midi-probe](https://palhamel.github.io/midi-probe/)
+
 Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs with human-readable message parsing, test outputs with a virtual keyboard and CC sliders -- all from a single browser tab.
 
 ## Features
@@ -15,6 +17,7 @@ Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs
 - Scan button to re-detect devices
 - MIDI access status indicator in header
 - Per-port activity indicators with IN/OUT labels
+- Guided setup screen when MIDI access is missing or browser is unsupported
 
 ### Input Monitoring
 - Auto-detect all connected MIDI input and output ports
@@ -22,7 +25,8 @@ Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs
 - Real-time message parsing: Note On/Off, CC, Program Change, Pitch Bend, Aftertouch, SysEx
 - Human-readable labels (Note On C4, CC#7 Volume, Pitch Bend +4096)
 - Color-coded message types for visual scanning
-- Scrolling message log with timestamps
+- Scrolling message log with timestamps (2000 message buffer)
+- Newest message highlighted for quick scanning
 
 ### Output Testing
 - Virtual 2-octave piano keyboard with octave shift and note hover tooltip
@@ -38,6 +42,10 @@ Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs
 - Export message log as CSV or JSON
 - Pause/resume log capture
 - Keyboard shortcuts: Space = pause, C = clear
+
+### Help and Documentation
+- Built-in About page with feature guide
+- MIDI introduction and history with external references
 
 ## Quick Start
 
@@ -58,7 +66,7 @@ MIDI Probe uses the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/
 - Edge 79+
 - Opera 30+
 
-Firefox and Safari do not support the Web MIDI API.
+Firefox and Safari do not support the Web MIDI API. If the browser lacks MIDI support, MIDI Probe displays a guided screen explaining supported alternatives.
 
 ## Tech Stack
 
@@ -83,19 +91,21 @@ Firefox and Safari do not support the Web MIDI API.
 
 ```
 src/
-  App.tsx                  # Main app layout
+  App.tsx                  # Main app layout with no-access handling
   hooks/
     useMIDI.ts             # Core MIDI hook (Web MIDI API wrapper)
   components/
-    Header.tsx             # Status bar with MIDI access indicator
+    Header.tsx             # Status bar with MIDI access indicator and About button
     DevicePanel.tsx        # Device list grouped by interface with scan button
-    MessageLog.tsx         # Scrolling parsed message log
+    MessageLog.tsx         # Scrolling parsed message log with newest highlight
     FilterPanel.tsx        # Message type and channel filters
     OutputPanel.tsx        # Output testing panel (orchestrator)
     Keyboard.tsx           # Virtual piano keyboard with note hover tooltip
     CCSliders.tsx          # Control Change sliders with click-to-reset
     PitchBend.tsx          # Horizontal pitch bend slider
     ProgramChange.tsx      # Program change sender
+    NoAccessScreen.tsx     # Guided setup when MIDI is unavailable
+    HelpModal.tsx          # About page with feature guide and MIDI history
     ErrorBanner.tsx        # Error display
   utils/
     midiParser.ts          # MIDI byte parsing and labeling

@@ -96,7 +96,7 @@ export const useMIDI = (): UseMIDIReturn => {
       midiEvent.data,
       portId,
       portName,
-      midiEvent.timeStamp || performance.now(),
+      Date.now(),
     );
 
     const filterKey = messageTypeToFilterKey(parsed.type);
@@ -165,7 +165,7 @@ export const useMIDI = (): UseMIDIReturn => {
           new Uint8Array(data),
           outputId,
           output.name || 'Unknown',
-          performance.now(),
+          Date.now(),
         );
         setMessages((prev) => {
           const next = [parsed, ...prev];

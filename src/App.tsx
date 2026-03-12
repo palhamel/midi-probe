@@ -6,6 +6,8 @@ import MessageLog from './components/MessageLog.tsx';
 import FilterPanel from './components/FilterPanel.tsx';
 import OutputPanel from './components/OutputPanel.tsx';
 import ErrorBanner from './components/ErrorBanner.tsx';
+import HelpModal from './components/HelpModal.tsx';
+import NoAccessScreen from './components/NoAccessScreen.tsx';
 
 type RightPanel = 'output' | 'filter';
 type MobileTab = 'monitor' | 'devices' | 'output' | 'filter';
@@ -33,14 +35,27 @@ const App = () => {
   const [selectedOutput, setSelectedOutput] = useState<string | null>(null);
   const [rightPanel, setRightPanel] = useState<RightPanel>('output');
   const [mobileTab, setMobileTab] = useState<MobileTab>('monitor');
+  const [showHelp, setShowHelp] = useState(false);
 
-  // Auto-select first output when outputs change
-  const firstOutputId = outputs.length > 0 ? outputs[0].id : null;
+  // Keep output selection valid as devices connect/disconnect
   useEffect(() => {
-    if (firstOutputId && !selectedOutput) {
-      setSelectedOutput(firstOutputId);
+    if (outputs.length === 0) {
+      if (selectedOutput !== null) {
+        setSelectedOutput(null);
+      }
+      return;
     }
-  }, [firstOutputId, selectedOutput]);
+
+    if (!selectedOutput) {
+      setSelectedOutput(outputs[0].id);
+      return;
+    }
+
+    const stillExists = outputs.some((output) => output.id === selectedOutput);
+    if (!stillExists) {
+      setSelectedOutput(outputs[0].id);
+    }
+  }, [outputs, selectedOutput]);
 
   const toggleInput = useCallback((id: string) => {
     const next = new Set(monitoredInputs);
@@ -84,129 +99,138 @@ const App = () => {
         isConnected={isConnected}
         isSupported={isSupported}
         messageRate={messageRate}
+        onOpenHelp={() => setShowHelp(true)}
       />
+
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 
       {error && <ErrorBanner message={error} />}
 
-      {/* Mobile/Tablet tab bar - visible below lg */}
-      <div className="flex border-b border-border bg-bg-secondary lg:hidden">
-        <button onClick={() => setMobileTab('monitor')} className={mobileTabClasses('monitor')}>
-          Monitor
-        </button>
-        <button onClick={() => setMobileTab('devices')} className={mobileTabClasses('devices')}>
-          Devices
-        </button>
-        <button onClick={() => setMobileTab('output')} className={mobileTabClasses('output')}>
-          Output
-        </button>
-        <button onClick={() => setMobileTab('filter')} className={mobileTabClasses('filter')}>
-          Filters
-        </button>
-      </div>
-
-      {/* Mobile/Tablet content - visible below lg */}
-      <div className="flex-1 overflow-hidden lg:hidden">
-        {mobileTab === 'monitor' && (
-          <div className="flex flex-col h-full">
-            <MessageLog
-              messages={messages}
-              paused={paused}
-              onClear={clearMessages}
-              onTogglePause={() => setPaused(!paused)}
-            />
-          </div>
-        )}
-        {mobileTab === 'devices' && (
-          <div className="h-full overflow-y-auto bg-bg-secondary">
-            <DevicePanel
-              inputs={inputs}
-              outputs={outputs}
-              monitoredInputs={monitoredInputs}
-              selectedOutput={selectedOutput}
-              onToggleInput={toggleInput}
-              onSelectOutput={setSelectedOutput}
-              onScanDevices={requestAccess}
-            />
-          </div>
-        )}
-        {mobileTab === 'output' && (
-          <div className="h-full overflow-y-auto bg-bg-secondary">
-            <OutputPanel
-              selectedOutput={selectedOutput}
-              outputName={selectedOutputName}
-              sendMessage={sendMessage}
-            />
-          </div>
-        )}
-        {mobileTab === 'filter' && (
-          <div className="h-full overflow-y-auto bg-bg-secondary">
-            <FilterPanel filter={filter} onFilterChange={setFilter} />
-          </div>
-        )}
-      </div>
-
-      {/* Desktop 3-column layout - visible at lg and above */}
-      <div className="hidden lg:flex flex-1 overflow-hidden">
-        {/* Left sidebar - Devices */}
-        <div className="w-52 shrink-0 border-r border-border bg-bg-secondary overflow-y-auto">
-          <DevicePanel
-            inputs={inputs}
-            outputs={outputs}
-            monitoredInputs={monitoredInputs}
-            selectedOutput={selectedOutput}
-            onToggleInput={toggleInput}
-            onSelectOutput={setSelectedOutput}
-            onScanDevices={requestAccess}
-          />
-        </div>
-
-        {/* Center - Message Log */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <MessageLog
-            messages={messages}
-            paused={paused}
-            onClear={clearMessages}
-            onTogglePause={() => setPaused(!paused)}
-          />
-        </div>
-
-        {/* Right sidebar - Output/Filter */}
-        <div className="w-80 shrink-0 border-l border-border bg-bg-secondary flex flex-col overflow-hidden">
-          <div className="flex border-b border-border">
-            <button
-              onClick={() => setRightPanel('output')}
-              className={`flex-1 px-3 py-2 text-xs font-medium cursor-pointer transition-colors
-                ${rightPanel === 'output'
-                  ? 'text-accent-purple border-b-2 border-accent-purple bg-bg-tertiary/50'
-                  : 'text-text-muted hover:text-text-secondary'
-                }`}
-            >
+      {!isConnected ? (
+        <NoAccessScreen isSupported={isSupported} onRequestAccess={requestAccess} />
+      ) : (
+        <>
+          {/* Mobile/Tablet tab bar - visible below lg */}
+          <div className="lg:hidden flex bg-bg-secondary border-border border-b">
+            <button onClick={() => setMobileTab('monitor')} className={mobileTabClasses('monitor')}>
+              Monitor
+            </button>
+            <button onClick={() => setMobileTab('devices')} className={mobileTabClasses('devices')}>
+              Devices
+            </button>
+            <button onClick={() => setMobileTab('output')} className={mobileTabClasses('output')}>
               Output
             </button>
-            <button
-              onClick={() => setRightPanel('filter')}
-              className={`flex-1 px-3 py-2 text-xs font-medium cursor-pointer transition-colors
-                ${rightPanel === 'filter'
-                  ? 'text-accent-blue border-b-2 border-accent-blue bg-bg-tertiary/50'
-                  : 'text-text-muted hover:text-text-secondary'
-                }`}
-            >
+            <button onClick={() => setMobileTab('filter')} className={mobileTabClasses('filter')}>
               Filters
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto">
-            {rightPanel === 'output' ? (
-              <OutputPanel
-                selectedOutput={selectedOutput}
-                outputName={selectedOutputName}
-                sendMessage={sendMessage}
-              />
-            ) : (
-              <FilterPanel filter={filter} onFilterChange={setFilter} />
+
+          {/* Mobile/Tablet content - visible below lg */}
+          <div className="lg:hidden flex-1 overflow-hidden">
+            {mobileTab === 'monitor' && (
+              <div className="flex flex-col h-full">
+                <MessageLog
+                  messages={messages}
+                  paused={paused}
+                  onClear={clearMessages}
+                  onTogglePause={() => setPaused(!paused)}
+                />
+              </div>
+            )}
+            {mobileTab === 'devices' && (
+              <div className="bg-bg-secondary h-full overflow-y-auto">
+                <DevicePanel
+                  inputs={inputs}
+                  outputs={outputs}
+                  monitoredInputs={monitoredInputs}
+                  selectedOutput={selectedOutput}
+                  onToggleInput={toggleInput}
+                  onSelectOutput={setSelectedOutput}
+                  onScanDevices={requestAccess}
+                />
+              </div>
+            )}
+            {mobileTab === 'output' && (
+              <div className="bg-bg-secondary h-full overflow-y-auto">
+                <OutputPanel
+                  selectedOutput={selectedOutput}
+                  outputName={selectedOutputName}
+                  sendMessage={sendMessage}
+                />
+              </div>
+            )}
+            {mobileTab === 'filter' && (
+              <div className="bg-bg-secondary h-full overflow-y-auto">
+                <FilterPanel filter={filter} onFilterChange={setFilter} />
+              </div>
             )}
           </div>
-        </div>
-      </div>
+
+          {/* Desktop 3-column layout - visible at lg and above */}
+          <div className="hidden lg:flex flex-1 overflow-hidden">
+            {/* Left sidebar - Devices */}
+            <div className="bg-bg-secondary border-border border-r w-52 overflow-y-auto shrink-0">
+              <DevicePanel
+                inputs={inputs}
+                outputs={outputs}
+                monitoredInputs={monitoredInputs}
+                selectedOutput={selectedOutput}
+                onToggleInput={toggleInput}
+                onSelectOutput={setSelectedOutput}
+                onScanDevices={requestAccess}
+              />
+            </div>
+
+            {/* Center - Message Log */}
+            <div className="flex flex-col flex-1 min-w-0">
+              <MessageLog
+                messages={messages}
+                paused={paused}
+                onClear={clearMessages}
+                onTogglePause={() => setPaused(!paused)}
+              />
+            </div>
+
+            {/* Right sidebar - Output/Filter */}
+            <div className="flex flex-col bg-bg-secondary border-border border-l w-80 overflow-hidden shrink-0">
+              <div className="flex border-border border-b">
+                <button
+                  onClick={() => setRightPanel('output')}
+                  className={`flex-1 px-3 py-2 text-xs font-medium cursor-pointer transition-colors
+                    ${rightPanel === 'output'
+                      ? 'text-accent-purple border-b-2 border-accent-purple bg-bg-tertiary/50'
+                      : 'text-text-muted hover:text-text-secondary'
+                    }`}
+                >
+                  Output
+                </button>
+                <button
+                  onClick={() => setRightPanel('filter')}
+                  className={`flex-1 px-3 py-2 text-xs font-medium cursor-pointer transition-colors
+                    ${rightPanel === 'filter'
+                      ? 'text-accent-blue border-b-2 border-accent-blue bg-bg-tertiary/50'
+                      : 'text-text-muted hover:text-text-secondary'
+                    }`}
+                >
+                  Filters
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                {rightPanel === 'output' ? (
+                  <OutputPanel
+                    selectedOutput={selectedOutput}
+                    outputName={selectedOutputName}
+                    sendMessage={sendMessage}
+                  />
+                ) : (
+                  <FilterPanel filter={filter} onFilterChange={setFilter} />
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
