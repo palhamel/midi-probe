@@ -43,3 +43,18 @@ When asked to work on this codebase:
 - UI should feel like **professional audio software** -- dark theme, clean, functional
 - The virtual keyboard and CC sliders are core differentiating features -- not afterthoughts
 - Target deployment: **GitHub Pages** (static files only)
+- Live URL: https://palhamel.github.io/midi-probe/
+
+## Architecture Notes
+
+- **Device panel** groups MIDI ports by manufacturer/interface, not flat input/output lists
+- **Header** MIDI indicator is status-only (non-clickable) -- scanning is in the device panel
+- **Output messages** are logged in the message log alongside incoming messages
+- **Message buffer** is capped at 2000 entries to prevent memory issues
+- **NoAccessScreen** replaces the main UI when MIDI access is missing -- guides the user through setup
+- **HelpModal** (About button) contains feature guide, MIDI intro, and MIDI history with external links
+- **CC slider labels** are clickable to reset to default values
+- **Keyboard hover tooltip** shows note name and MIDI number
+- All interactive controls must work on **touch devices** (iPad) -- no keyboard-only features
+- CI uses `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24` to avoid Node.js 20 deprecation warnings
+- Made by [Code Rebel](https://coderebel.se/)
