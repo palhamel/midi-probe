@@ -1,23 +1,23 @@
 # Product Roadmap
 
-> Last Updated: 2026-03-12
-> Version: 1.0.0
-> Status: Planning
+> Last Updated: 2026-03-13
+> Version: 2.0.0
+> Status: Phase 5 (Advanced Features)
 
-## Phase 1: Core MIDI Monitor (1 week)
+## Phase 1: Core MIDI Monitor -- COMPLETE
 
 **Goal:** Get a working MIDI input monitor with device detection and parsed messages
 **Success Criteria:** Can connect a MIDI device, see it listed, and see parsed Note On/Off messages in real-time
 
 ### Must-Have Features
 
-- [ ] Project scaffolding -- Vite + React + TypeScript + Tailwind v4 setup `XS`
-- [ ] MIDI access hook -- `useMIDI` hook wrapping `navigator.requestMIDIAccess()` with permission handling `S`
-- [ ] Device list panel -- Show all connected MIDI input and output ports with state `S`
-- [ ] Hot-plug detection -- Live device connect/disconnect reflected in UI `S`
-- [ ] Message parser -- Decode MIDI bytes into human-readable format (Note On/Off, CC, Program Change, Pitch Bend, Aftertouch, System) `M`
-- [ ] Message log panel -- Scrolling list of parsed messages with timestamps, color-coded by type `S`
-- [ ] Dark theme layout -- App shell with dark studio aesthetic, header, sidebar, main panel `S`
+- [x] Project scaffolding -- Vite + React + TypeScript + Tailwind v4 setup `XS`
+- [x] MIDI access hook -- `useMIDI` hook wrapping `navigator.requestMIDIAccess()` with permission handling `S`
+- [x] Device list panel -- Show all connected MIDI input and output ports with state `S`
+- [x] Hot-plug detection -- Live device connect/disconnect reflected in UI `S`
+- [x] Message parser -- Decode MIDI bytes into human-readable format (Note On/Off, CC, Program Change, Pitch Bend, Aftertouch, System) `M`
+- [x] Message log panel -- Scrolling list of parsed messages with timestamps, color-coded by type `S`
+- [x] Dark theme layout -- App shell with dark studio aesthetic, header, sidebar, main panel `S`
 
 ### Dependencies
 
@@ -25,24 +25,24 @@
 
 ---
 
-## Phase 2: Output Testing (1 week)
+## Phase 2: Output Testing -- COMPLETE
 
 **Goal:** Add ability to send MIDI messages to connected output devices
 **Success Criteria:** Can send a Note On from the virtual keyboard and hear it on a connected synth
 
 ### Must-Have Features
 
-- [ ] Output port selector -- Choose which MIDI output to send to `S`
-- [ ] Virtual keyboard -- Clickable 2-octave piano that sends Note On/Off with configurable velocity and channel `M`
-- [ ] CC sliders -- 4-8 configurable CC sliders (volume, pan, mod wheel, expression, etc.) with number input and label `M`
-- [ ] Pitch bend wheel -- Spring-loaded pitch bend control that returns to center on release `S`
-- [ ] Program change selector -- Number input + send button for program and bank changes `S`
+- [x] Output port selector -- Choose which MIDI output to send to `S`
+- [x] Virtual keyboard -- Clickable 2-octave piano that sends Note On/Off with configurable velocity and channel `M`
+- [x] CC sliders -- 6 configurable CC sliders (Mod Wheel, Volume, Pan, Expression, Cutoff, Resonance) with number input and label `M`
+- [x] Pitch bend wheel -- Spring-loaded pitch bend control that returns to center on release `S`
+- [x] Program change selector -- Number input + send button for program changes `S`
 
 ### Should-Have Features
 
 - [ ] Velocity sensitivity -- Click position on keyboard key maps to velocity `XS`
-- [ ] Octave shift -- Shift the keyboard range up/down `XS`
-- [ ] MIDI channel selector -- Choose output channel 1-16 `XS`
+- [x] Octave shift -- Shift the keyboard range up/down (C0-C8) `XS`
+- [x] MIDI channel selector -- Choose output channel 1-16 `XS`
 
 ### Dependencies
 
@@ -50,24 +50,24 @@
 
 ---
 
-## Phase 3: Filtering and UX Polish (3-5 days)
+## Phase 3: Filtering and UX Polish -- COMPLETE
 
 **Goal:** Make the tool production-ready with filtering, activity indicators, and refined UI
 **Success Criteria:** Can filter messages by type/channel, see per-port activity, and the UI feels professional
 
 ### Must-Have Features
 
-- [ ] Message filtering -- Toggle filters by message type (notes, CC, program change, etc.) `S`
-- [ ] Channel filter -- Filter messages by MIDI channel `S`
-- [ ] Activity indicators -- Per-port LED-style dots that flash on MIDI activity `S`
-- [ ] Clear log button -- Reset the message log `XS`
-- [ ] Device selector -- Choose which input ports to monitor (instead of all) `S`
-- [ ] Responsive layout -- Works well on 1024px+ screens, functional on tablet `S`
+- [x] Message filtering -- Toggle filters by message type (notes, CC, program change, etc.) `S`
+- [x] Channel filter -- Filter messages by MIDI channel `S`
+- [x] Activity indicators -- Per-port LED-style dots that flash on MIDI activity `S`
+- [x] Clear log button -- Reset the message log `XS`
+- [x] Device selector -- Choose which input ports to monitor (instead of all) `S`
+- [x] Responsive layout -- Works well on 1024px+ screens, tab-based on mobile/tablet `S`
 
 ### Should-Have Features
 
 - [ ] CC number filter -- Filter to specific CC numbers `XS`
-- [ ] Message rate display -- Show messages/second per port `S`
+- [x] Message rate display -- Show messages/second in header `S`
 - [ ] Hex/decimal toggle -- Switch between hex and decimal display for raw data `XS`
 
 ### Dependencies
@@ -76,25 +76,25 @@
 
 ---
 
-## Phase 4: Export, PWA, and Deployment (3-5 days)
+## Phase 4: Export, PWA, and Deployment -- COMPLETE
 
 **Goal:** Make the tool installable and deployable with data export
-**Success Criteria:** Deployed to GitHub Pages, installable as PWA, can export message logs
+**Success Criteria:** Deployed to GitHub Pages, can export message logs
 
 ### Must-Have Features
 
-- [ ] Export log as CSV -- Download filtered message log as CSV file `S`
-- [ ] Export log as JSON -- Download filtered message log as JSON file `S`
+- [x] Export log as CSV -- Download filtered message log as CSV file `S`
+- [x] Export log as JSON -- Download filtered message log as JSON file `S`
 - [ ] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
-- [ ] GitHub Actions CI -- Lint, typecheck, build on push `S`
-- [ ] GitHub Pages deployment -- Automated deploy to GitHub Pages on push to main `S`
-- [ ] README -- Professional README with screenshot, features, live demo link `S`
-- [ ] MIT License `XS`
+- [x] GitHub Actions CI -- Lint, typecheck, test, build on push `S`
+- [x] GitHub Pages deployment -- Automated deploy to GitHub Pages on push to main `S`
+- [x] README -- Professional README with screenshot, features, live demo link `S`
+- [x] MIT License `XS`
 
 ### Should-Have Features
 
 - [ ] Offline support -- Service worker caches app for offline use `S`
-- [ ] Keyboard shortcuts -- Space to pause/resume log, C to clear, number keys for octave `S`
+- [x] Keyboard shortcuts -- Space to pause/resume log, C to clear `S`
 
 ### Dependencies
 
@@ -115,6 +115,14 @@
 - [ ] Custom CC mapping -- Name and save custom CC label presets per device `S`
 - [ ] Session recording -- Record and replay MIDI sessions `L`
 - [ ] Multiple monitor tabs -- Open separate monitor views for different ports `M`
+
+### Remaining from earlier phases
+
+- [ ] Velocity sensitivity -- Click position on keyboard key maps to velocity `XS`
+- [ ] CC number filter -- Filter to specific CC numbers `XS`
+- [ ] Hex/decimal toggle -- Switch between hex and decimal display for raw data `XS`
+- [ ] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
+- [ ] Offline support -- Service worker caches app for offline use `S`
 
 ### Dependencies
 
