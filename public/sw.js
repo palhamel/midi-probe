@@ -24,16 +24,26 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   // Network-first for navigation, cache-first for assets
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          if (response.ok) {
+            const clone = response.clone();
+            event.waitUntil(
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+            );
+          }
           return response;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() =>
+          caches.match(event.request).then((cached) =>
+            cached || caches.match('/midi-koll/index.html')
+          )
+        )
     );
     return;
   }
@@ -44,7 +54,9 @@ self.addEventListener('fetch', (event) => {
       return fetch(event.request).then((response) => {
         if (response.ok && event.request.url.startsWith(self.location.origin)) {
           const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          event.waitUntil(
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
+          );
         }
         return response;
       });

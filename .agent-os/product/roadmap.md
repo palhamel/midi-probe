@@ -85,7 +85,7 @@
 
 - [x] Export log as CSV -- Download filtered message log as CSV file `S`
 - [x] Export log as JSON -- Download filtered message log as JSON file `S`
-- [ ] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
+- [x] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
 - [x] GitHub Actions CI -- Lint, typecheck, test, build on push `S`
 - [x] GitHub Pages deployment -- Automated deploy to GitHub Pages on push to main `S`
 - [x] README -- Professional README with screenshot, features, live demo link `S`
@@ -121,8 +121,8 @@
 - [ ] Velocity sensitivity -- Click position on keyboard key maps to velocity `XS`
 - [ ] CC number filter -- Filter to specific CC numbers `XS`
 - [ ] Hex/decimal toggle -- Switch between hex and decimal display for raw data `XS`
-- [ ] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
-- [ ] Offline support -- Service worker caches app for offline use `S`
+- [x] PWA manifest -- Service worker, manifest.json, icons for installable app `S`
+- [x] Offline support -- Service worker caches app for offline use `S`
 
 ### Dependencies
 
