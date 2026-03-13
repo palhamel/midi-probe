@@ -6,10 +6,15 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
 [![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
 
-**Live:** [palhamel.github.io/midi-koll](https://palhamel.github.io/midi-koll/)
+**Use it live in your browser:** [palhamel.github.io/midi-koll](https://palhamel.github.io/midi-koll/)
 
 Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs with human-readable message parsing, test outputs with a virtual keyboard and CC sliders -- all from a single browser tab.
 
+```
+MIDI-koll -> 'koll' is the Swedish word for 'overview'
+
+This is actually a very handy tool when you need to debug your MIDI pipeline.
+```
 ## Features
 
 ### Device Management
