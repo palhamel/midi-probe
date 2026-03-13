@@ -5,6 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
 [![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
+[![Tests](https://img.shields.io/badge/-MIDI-000000?style=flat&logo=midi&logoColor=white)]()
 
 **Use it live in your browser:** [palhamel.github.io/midi-koll](https://palhamel.github.io/midi-koll/)
 
