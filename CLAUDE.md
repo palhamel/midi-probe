@@ -1,4 +1,4 @@
-# CLAUDE.md -- MIDI Probe
+# CLAUDE.md -- MIDI-koll
 
 > Browser-based MIDI diagnostic and testing tool
 
@@ -43,7 +43,7 @@ When asked to work on this codebase:
 - UI should feel like **professional audio software** -- dark theme, clean, functional
 - The virtual keyboard and CC sliders are core differentiating features -- not afterthoughts
 - Target deployment: **GitHub Pages** (static files only)
-- Live URL: https://palhamel.github.io/midi-probe/
+- Live URL: https://palhamel.github.io/midi-koll/
 
 ## Architecture Notes
 

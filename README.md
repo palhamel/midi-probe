@@ -1,4 +1,4 @@
-# MIDI Probe
+# MIDI-koll
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-22-339933)](https://nodejs.org/)
@@ -6,7 +6,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
 [![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
 
-**Live:** [palhamel.github.io/midi-probe](https://palhamel.github.io/midi-probe/)
+**Live:** [palhamel.github.io/midi-koll](https://palhamel.github.io/midi-koll/)
 
 Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs with human-readable message parsing, test outputs with a virtual keyboard and CC sliders -- all from a single browser tab.
 
@@ -50,23 +50,23 @@ Professional browser-based MIDI diagnostic and testing tool. Monitor MIDI inputs
 ## Quick Start
 
 ```bash
-git clone https://github.com/palhamel/midi-probe.git
-cd midi-probe
+git clone https://github.com/palhamel/midi-koll.git
+cd midi-koll
 npm install
 npm run dev
 ```
 
-Open http://localhost:5173/midi-probe/ in Chrome, Edge, or Opera.
+Open http://localhost:5173/midi-koll/ in Chrome, Edge, or Opera.
 
 ## Browser Support
 
-MIDI Probe uses the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API), which is available in Chromium-based browsers only:
+MIDI-koll uses the [Web MIDI API](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API), which is available in Chromium-based browsers only:
 
 - Chrome 43+
 - Edge 79+
 - Opera 30+
 
-Firefox and Safari do not support the Web MIDI API. If the browser lacks MIDI support, MIDI Probe displays a guided screen explaining supported alternatives.
+Firefox and Safari do not support the Web MIDI API. If the browser lacks MIDI support, MIDI-koll displays a guided screen explaining supported alternatives.
 
 ## Tech Stack
 

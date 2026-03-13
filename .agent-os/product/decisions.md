@@ -15,7 +15,7 @@
 
 ### Decision
 
-Build MIDI Probe as a professional browser-based MIDI diagnostic and testing tool. The tool monitors MIDI input with human-readable message parsing and provides output testing via virtual keyboard, CC sliders, and pitch bend. Target audience is musicians, synth enthusiasts, and MIDI developers. Replaces the abandoned `webMIDI-IO-app` repo with a complete rewrite in a new repository.
+Build MIDI-koll as a professional browser-based MIDI diagnostic and testing tool. The tool monitors MIDI input with human-readable message parsing and provides output testing via virtual keyboard, CC sliders, and pitch bend. Target audience is musicians, synth enthusiasts, and MIDI developers. Replaces the abandoned `webMIDI-IO-app` repo with a complete rewrite in a new repository.
 
 ### Context
 
@@ -62,7 +62,7 @@ Browser-based approach maximizes accessibility (open a URL and go), the Web MIDI
 
 ### Decision
 
-Create a new repository (`midi-probe`) instead of rewriting within the existing `webMIDI-IO-app` repo. The old repo will be set to private.
+Create a new repository (`midi-koll`) instead of rewriting within the existing `webMIDI-IO-app` repo. The old repo will be set to private.
 
 ### Context
 

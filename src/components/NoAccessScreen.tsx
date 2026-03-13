@@ -76,7 +76,7 @@ const NoAccessScreen = ({ isSupported, onRequestAccess }: NoAccessScreenProps) =
             </h2>
             <p className="text-xs text-text-muted leading-relaxed">
               The Web MIDI API is not available in this browser.
-              MIDI Probe requires a Chromium-based browser to access your MIDI devices.
+              MIDI-koll requires a Chromium-based browser to access your MIDI devices.
             </p>
           </div>
 

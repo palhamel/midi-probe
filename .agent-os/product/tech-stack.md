@@ -47,7 +47,7 @@ No additional runtime dependencies. The Web MIDI API is built into Chromium brow
 - **Database:** n/a (no server-side state)
 - **Asset Hosting:** Same as application hosting
 - **Deployment:** GitHub Actions -- build on push to main, deploy to GitHub Pages
-- **Code Repository:** https://github.com/palhamel/midi-probe (to be created)
+- **Code Repository:** https://github.com/palhamel/midi-koll
 
 ## Browser Support
 

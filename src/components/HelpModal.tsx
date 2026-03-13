@@ -22,7 +22,7 @@ const HelpModal = ({ onClose }: HelpModalProps) => (
   >
     <div className="flex flex-col bg-bg-primary shadow-xl mx-4 border border-border rounded-lg w-full max-w-lg max-h-[85vh]">
       <div className="flex justify-between items-center px-4 py-3 border-border border-b">
-        <h2 className="font-semibold text-sm">MIDI Probe Guide</h2>
+        <h2 className="font-semibold text-sm">MIDI-koll Guide</h2>
         <button
           onClick={onClose}
           className="hover:bg-bg-hover p-1 rounded transition-colors cursor-pointer"
@@ -120,7 +120,7 @@ const HelpModal = ({ onClose }: HelpModalProps) => (
 
         <Section title="Browser Support">
           <p>
-            MIDI Probe uses the Web MIDI API, available in Chromium-based browsers:
+            MIDI-koll uses the Web MIDI API, available in Chromium-based browsers:
             Chrome, Edge, and Opera. Firefox and Safari are not supported.
           </p>
         </Section>

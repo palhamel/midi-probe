@@ -5,7 +5,7 @@
 
 ## Pitch
 
-MIDI Probe is a professional browser-based MIDI diagnostic tool that helps musicians, synth enthusiasts, and audio engineers test, monitor, and debug MIDI hardware by providing real-time message parsing, output testing, and device management -- all from a single browser tab with zero installation.
+MIDI-koll is a professional browser-based MIDI diagnostic tool that helps musicians, synth enthusiasts, and audio engineers test, monitor, and debug MIDI hardware by providing real-time message parsing, output testing, and device management -- all from a single browser tab with zero installation.
 
 ## Users
 
@@ -59,15 +59,15 @@ Verifying that a MIDI output port is working requires opening a DAW or synthesiz
 
 ### Zero-install browser-based tool
 
-Unlike desktop MIDI monitors (MIDI Monitor for Mac, MIDI-OX for Windows) that require installation, MIDI Probe runs entirely in the browser. Open a URL and start testing. Works on any Chromium browser, deployable as a PWA for offline use.
+Unlike desktop MIDI monitors (MIDI Monitor for Mac, MIDI-OX for Windows) that require installation, MIDI-koll runs entirely in the browser. Open a URL and start testing. Works on any Chromium browser, deployable as a PWA for offline use.
 
 ### Human-readable message parsing with pro UI
 
-Unlike raw byte dumps from existing tools, MIDI Probe shows parsed, color-coded messages with note names (C#4), CC labels (CC#7 Volume), and channel info. The dark-themed UI is designed to feel like professional audio software, not a developer debug tool.
+Unlike raw byte dumps from existing tools, MIDI-koll shows parsed, color-coded messages with note names (C#4), CC labels (CC#7 Volume), and channel info. The dark-themed UI is designed to feel like professional audio software, not a developer debug tool.
 
 ### Bidirectional testing -- monitor AND send
 
-Unlike most MIDI monitors that are input-only, MIDI Probe includes output testing with a virtual keyboard, CC sliders, pitch bend wheel, and program change selector. Test your entire MIDI chain from one tool.
+Unlike most MIDI monitors that are input-only, MIDI-koll includes output testing with a virtual keyboard, CC sliders, pitch bend wheel, and program change selector. Test your entire MIDI chain from one tool.
 
 ## Key Features
 

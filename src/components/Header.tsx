@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header = ({ isConnected, isSupported, messageRate, onOpenHelp }: HeaderProps) => (
   <header className="flex items-center justify-between px-4 py-3 bg-bg-secondary border-b border-border">
     <div className="flex items-center gap-3">
-      <h1 className="text-lg font-semibold tracking-tight">MIDI Probe</h1>
+      <h1 className="text-lg font-semibold tracking-tight">MIDI-koll</h1>
       <span className="text-xs text-text-muted font-mono">v1.0.0</span>
     </div>
     <div className="flex items-center gap-4">
@@ -59,7 +59,7 @@ const Header = ({ isConnected, isSupported, messageRate, onOpenHelp }: HeaderPro
       </div>
       <button
         onClick={onOpenHelp}
-        title="About MIDI Probe"
+        title="About MIDI-koll"
         className="flex items-center gap-1 px-2 py-1 rounded text-xs cursor-pointer
                    text-text-muted border border-border
                    hover:bg-bg-hover hover:text-text-secondary transition-colors"
