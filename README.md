@@ -4,8 +4,8 @@
 [![Node.js](https://img.shields.io/badge/Node.js-22-339933)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
-[![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)]()
-[![Tests](https://img.shields.io/badge/-MIDI-000000?style=flat&logo=midi&logoColor=white)]()
+[![Tests](https://img.shields.io/badge/Tests-47_passing-4ade80)](https://github.com/palhamel/midi-koll/actions)
+[![MIDI](https://img.shields.io/badge/-MIDI-000000?style=flat&logo=midi&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API)
 
 **Use it live in your browser:** [palhamel.github.io/midi-koll](https://palhamel.github.io/midi-koll/)
 
